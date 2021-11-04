@@ -16,7 +16,7 @@ workflows:
     steps:
     - script:
         title: "Hello"
-    - path::$HOME/go/src/github.com/yacone/bitrise-step-upload-dsyms-to-sentry/:
+    - path::./:
         title: "Run Local"
 
   test:
