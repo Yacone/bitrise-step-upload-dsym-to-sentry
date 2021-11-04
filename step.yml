@@ -13,9 +13,9 @@ summary: |
   Upload
 description: |
   Upload
-website: http://google.com
-source_code_url: http://google.com
-support_url: http://google.com
+website: https://github.com/Yacone/bitrise-step-upload-dsym-to-sentry
+source_code_url: https://github.com/Yacone/bitrise-step-upload-dsym-to-sentry
+support_url: https://github.com/Yacone/bitrise-step-upload-dsym-to-sentry
 host_os_tags:
   - osx-10.10
   - ubuntu-16.04
