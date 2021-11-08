@@ -4,23 +4,29 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+
+	"github.com/bitrise-io/go-steputils/stepconf"
+	"github.com/bitrise-io/go-utils/env"
 )
 
-func main() {
-	fmt.Println("Hello its me mario 'example_step_input':", os.Getenv("example_step_input"))
+type Config struct {
+	OrgSlug     string `env:"sentry_org"`
+	ProjectSlug string `env:"sentry_project"`
+	AuthToken   string `env:"sentry_auth_token"`
+}
 
-	//
-	// --- Step Outputs: Export Environment Variables for other Steps:
-	// You can export Environment Variables for other Steps with
-	//  envman, which is automatically installed by `bitrise setup`.
-	// A very simple example:
-	cmdLog, err := exec.Command("bitrise", "envman", "add", "--key", "EXAMPLE_STEP_OUTPUT", "--value", "the value you want to share").CombinedOutput()
+func main() {
+	pathDsyms := "./"
+	var config Config
+	envRepo := env.NewRepository()
+	stepconf.NewInputParser(envRepo).Parse(&config)
+	fmt.Println(config.AuthToken)
+
+	cmdLog, err := exec.Command("sentry-cli", "--auth-token", config.AuthToken, "upload-dif", "--org", config.OrgSlug, "--project", config.ProjectSlug, pathDsyms).CombinedOutput()
 	if err != nil {
-		fmt.Printf("Failed to expose output with envman, error: %#v | output: %s", err, cmdLog)
-		os.Exit(1)
+		fmt.Printf("Failed to upload dsyms error: %#v | output: %s", err.Error(), cmdLog)
+		os.Exit(-1)
 	}
-	// You can find more usage examples on envman's GitHub page
-	//  at: https://github.com/bitrise-io/envman
 
 	//
 	// --- Exit codes:

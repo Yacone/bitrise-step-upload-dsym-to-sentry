@@ -10,9 +10,9 @@
 title: |-
   Upload dSYMs to Sentry
 summary: |
-  Upload
+  Upload dSYMs files to Sentry
 description: |
-  Upload
+  Upload dSYMs files to Sentry
 website: https://github.com/Yacone/bitrise-step-upload-dsym-to-sentry
 source_code_url: https://github.com/Yacone/bitrise-step-upload-dsym-to-sentry
 support_url: https://github.com/Yacone/bitrise-step-upload-dsym-to-sentry
@@ -29,8 +29,8 @@ host_os_tags:
 # You can find more information about project type tags in the Step Development Guideline:
 # https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
 #
-# project_type_tags:
-#   - ios
+project_type_tags:
+  - ios
 #   - macos
 #   - android
 #   - xamarin
@@ -52,10 +52,7 @@ run_if: ""
 deps:
   brew:
   - name: git
-  - name: wget
-  apt_get:
-  - name: git
-  - name: wget
+  - name: getsentry/tools/sentry-cli
 
 
 toolkit:
@@ -63,24 +60,25 @@ toolkit:
     package_name: github.com/Yacone/bitrise-step-upload-dsym-to-sentry
 
 inputs:
-  - example_step_input: Default Value - you can leave this empty if you want to
+  - sentry_org: my-org
     opts:
-      title: "Example Step Input"
-      summary: Summary. No more than 2-3 sentences.
-      description: |
-        Description of this input.
-
-        Can be Markdown formatted text.
+      title: "Sentry Organisation Slug"
+      summary: Your Sentry organisation slug
       is_expand: true
       is_required: true
       value_options: []
-
-outputs:
-  - EXAMPLE_STEP_OUTPUT:
+  - sentry_project: my-awesome-project
     opts:
-      title: "Example Step Output"
-      summary: Summary. No more than 2-3 sentences.
-      description: |
-        Description of this output.
-
-        Can be Markdown formatted text.
+      title: "Sentry Project Slug"
+      summary: The project slug on sentry
+      is_expand: true
+      is_required: true
+      value_options: []
+  - sentry_auth_token:
+      opts:
+      title: "Sentry Auth Token"
+      summary: The project name on sentry
+      is_expand: true
+      is_required: true
+      is_sensitive: true
+      value_options: []
