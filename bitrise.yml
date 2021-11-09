@@ -3,6 +3,8 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 app:
   envs:
+  - SENTRY_ORG: 
+  - SENTRY_PROJECT: 
   - SENTRY_AUTH_TOKEN: $SECRET_AUTH_TOKEN
   # If you want to share this step into a StepLib
   - BITRISE_STEP_ID: upload-dsyms-to-sentry
